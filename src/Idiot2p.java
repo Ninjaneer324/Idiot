@@ -236,42 +236,42 @@ public class Idiot2p {
          
     }
 
-public static boolean isSpecial(IdiotCard c) {
-    return c.getFace() == 2 || c.getFace() == 3 || c.getFace() == 7 || c.getFace() == 10;
-}
-    
-public static boolean valid(IdiotCard top, IdiotCard play) {
-    if(top.getFace() == 2 || isSpecial(play))
-        return true;
-    if(play.getFace() == 10) {
-        for(int i = pile.size() - 1; i > -1; i--)
-            trash.add(pile.remove(i));
-        trash.add(play);
-        return true;
+    public static boolean isSpecial(IdiotCard c) {
+        return c.getFace() == 2 || c.getFace() == 3 || c.getFace() == 7 || c.getFace() == 10;
     }
-    if(pile.top3()) {
-        int temp = 2;
-        while(pile.size() - temp > -1 && pile.get(pile.size() - temp).getFace() == 3) {
-            temp++;
+    
+    public static boolean valid(IdiotCard top, IdiotCard play) {
+        if(top.getFace() == 2 || isSpecial(play))
+            return true;
+        if(play.getFace() == 10) {
+            for(int i = pile.size() - 1; i > -1; i--)
+                trash.add(pile.remove(i));
+            trash.add(play);
+            return true;
         }
-        if (pile.size() - temp <= -1)
-            temp = pile.size();
-        IdiotCard t = pile.get(pile.size() - temp);
-        if(!isSpecial(t) && t.getFace() <= play.getFace())
-                return true;
-        else if(isSpecial(t)) {
-            switch(t.getFace()) {
-                case 2:
-                case 3:
+        if(pile.top3()) {
+            int temp = 2;
+            while(pile.size() - temp > -1 && pile.get(pile.size() - temp).getFace() == 3) {
+                temp++;
+            }
+            if (pile.size() - temp <= -1)
+                temp = pile.size();
+            IdiotCard t = pile.get(pile.size() - temp);
+            if(!isSpecial(t) && t.getFace() <= play.getFace())
                     return true;
-                case 7:
-                    return isSpecial(play) || play.getFace() <= 7;
-                default:
-                    return false;
+            else if(isSpecial(t)) {
+                switch(t.getFace()) {
+                    case 2:
+                    case 3:
+                        return true;
+                    case 7:
+                        return isSpecial(play) || play.getFace() <= 7;
+                    default:
+                        return false;
+                }
             }
         }
+        return false;
     }
-    return false;
-}
     
 }
