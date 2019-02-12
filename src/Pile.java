@@ -13,7 +13,7 @@ import java.util.*;
 public class Pile {
     private ArrayList<IdiotCard> pile;
     public Pile() {
-        pile = new ArrayList<>();
+        pile = new ArrayList<IdiotCard>();
     }
     public IdiotCard top() {
         return pile.get(pile.size() - 1);
