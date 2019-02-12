@@ -57,15 +57,15 @@ public class IdiotPlayer {
         }
         
         public void addCardToFaceUp(IdiotCard card) {
-		faceup.add(card);
+            faceup.add(card);
 	}
 	
         public IdiotCard getCardFaceUp(int card) {
-		return faceup.get(card);
+            return faceup.get(card);
 	}
         
         public IdiotCard playCardFaceUp(int card) {
-		return faceup.remove(card);
+            return faceup.remove(card);
 	}
         
         public int faceUpSize() {
@@ -85,15 +85,15 @@ public class IdiotPlayer {
         }
              
 	public void addCardToFaceDown(IdiotCard card) {
-		facedown.add(card);
+            facedown.add(card);
 	}
         
 	public IdiotCard getCardFaceDown(int card) {
-		return facedown.get(card);
+            return facedown.get(card);
 	}
         
 	public IdiotCard playCardFaceDown(int card) {
-		return facedown.remove(card);
+            return facedown.remove(card);
 	}
         
         public int faceDownSize() {

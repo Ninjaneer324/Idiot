@@ -11,6 +11,11 @@ public class IdiotCard {
     private String suit = "";
     private int face = 0;
     
+    public IdiotCard() {
+        face = 1;
+        suit = "Spades";
+    }
+    
     public IdiotCard(int f, String s ) {
     	//set variables
         face = f;
