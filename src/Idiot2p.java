@@ -12,6 +12,11 @@ import java.util.*;
 import java.io.*;
 
 public class Idiot2p {
+    private static IdiotPlayer p1;
+    private static IdiotPlayer p2;
+    private static Deck deck;
+    private static Pile pile;
+    private static ArrayList<IdiotCard> trash;
     public static void main(String[] args) throws Exception {
          Scanner scan = new Scanner(System.in);
          boolean play = false;
@@ -32,15 +37,15 @@ public class Idiot2p {
              System.out.println(p1_n+  " v. " + p2_n);
              System.out.println("");
              //Insert game
-             IdiotPlayer p1 = new IdiotPlayer(p1_n);
-             IdiotPlayer p2 = new IdiotPlayer(p2_n);
-             Deck deck = new Deck();
+             p1 = new IdiotPlayer(p1_n);
+             p2 = new IdiotPlayer(p2_n);
+             deck = new Deck();
              //Shuffle deck
              deck.shuffle();
              //Play pile
-             Pile pile = new Pile();
+             pile = new Pile();
              //Trash pile
-             ArrayList<IdiotCard> trash = new ArrayList<IdiotCard>();
+             trash = new ArrayList<IdiotCard>();
              //Deal cards
              p1.addCard(deck.deal());
              p1.addCard(deck.deal());
@@ -72,7 +77,7 @@ public class Idiot2p {
                     System.out.println("This is the play pile top card.");
                     System.out.println(pile.top());
                     if(pile.top3()) {
-                        System.out.println("These are the cards underneath the top.");
+                        System.out.println("This is the cards underneath the 3(s).");
                         pile.printUnder3();
                     }
                     System.out.println("");
@@ -226,9 +231,47 @@ public class Idiot2p {
                  if(ans.equals("Y")) {
                      play = true;
                  }
-                 System.out.println("\n\n\n\n");
+                 System.out.print("\n\n\n\n");
          }while(play);
          
     }
+
+public static boolean isSpecial(IdiotCard c) {
+    return c.getFace() == 2 || c.getFace() == 3 || c.getFace() == 7 || c.getFace() == 10;
+}
+    
+public static boolean valid(IdiotCard top, IdiotCard play) {
+    if(top.getFace() == 2 || isSpecial(play))
+        return true;
+    if(play.getFace() == 10) {
+        for(int i = pile.size() - 1; i > -1; i--)
+            trash.add(pile.remove(i));
+        trash.add(play);
+        return true;
+    }
+    if(pile.top3()) {
+        int temp = 2;
+        while(pile.size() - temp > -1 && pile.get(pile.size() - temp).getFace() == 3) {
+            temp++;
+        }
+        if (pile.size() - temp <= -1)
+            temp = pile.size();
+        IdiotCard t = pile.get(pile.size() - temp);
+        if(!isSpecial(t) && t.getFace() <= play.getFace())
+                return true;
+        else if(isSpecial(t)) {
+            switch(t.getFace()) {
+                case 2:
+                case 3:
+                    return true;
+                case 7:
+                    return isSpecial(play) || play.getFace() <= 7;
+                default:
+                    return false;
+            }
+        }
+    }
+    return false;
+}
     
 }
