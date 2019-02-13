@@ -103,6 +103,8 @@ public class Idiot2p {
                             IdiotCard temp = p1.getCard(card);
                             pile.add(p1.playCard(card));
                             System.out.println(p1.name() + " played " + temp+".\n\n\n");
+                            if(p1.handSize() < 3 && !deck.isEmpty())
+                                p1.addCard(deck.draw());
                         }
                     }
                     else if (!p1.faceUpIsEmpty()) {
@@ -171,6 +173,8 @@ public class Idiot2p {
                             IdiotCard temp = p2.getCard(card);
                             pile.add(p2.playCard(card));
                             System.out.println(p2.name() + " played " + temp + ".\n\n\n");
+                            if(p1.handSize() < 3 && !deck.isEmpty())
+                                p1.addCard(deck.draw());
                         }
                     }
                     else if (!p2.faceUpIsEmpty()) {
@@ -211,6 +215,7 @@ public class Idiot2p {
                             IdiotCard temp = p2.getCardFaceDown(card);
                             pile.add(p2.playCardFaceDown(card));
                             System.out.println(p2.name() + " played " + temp + ".\n\n\n");
+                            p2.addCard(deck.draw());
                         }
                     }
                     turn--;   
@@ -241,14 +246,14 @@ public class Idiot2p {
     }
     
     public static boolean valid(IdiotCard top, IdiotCard play) {
-        if(top.getFace() == 2 || isSpecial(play))
-            return true;
         if(play.getFace() == 10) {
             for(int i = pile.size() - 1; i > -1; i--)
                 trash.add(pile.remove(i));
             trash.add(play);
             return true;
         }
+        if(top.getFace() == 2 || isSpecial(play))
+            return true;
         if(pile.top3()) {
             int temp = 2;
             while(pile.size() - temp > -1 && pile.get(pile.size() - temp).getFace() == 3) {
@@ -265,13 +270,11 @@ public class Idiot2p {
                     case 3:
                         return true;
                     case 7:
-                        return isSpecial(play) || play.getFace() <= 7;
-                    default:
-                        return false;
+                        return play.getFace() <= 7;
                 }
             }
         }
-        return false;
+        return top.getFace() <= play.getFace();
     }
     
 }

@@ -49,6 +49,11 @@ public class Deck {
     public int getSize() {
     	return deck.size();
     }
+    
+    public boolean isEmpty() {
+        return deck.isEmpty();
+    }
+    
     public String toString() {
         return deck.toString();
     } 
