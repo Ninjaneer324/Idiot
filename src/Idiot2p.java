@@ -98,13 +98,23 @@ public class Idiot2p {
                             for(int i = pile.size() - 1; i > -1; i--) {
                                 p1.addCard(pile.remove(i));
                             }
+                            System.out.println(p1.name() + ", enter the list index of the card you wanna play.");
+                            card = scan.nextInt() - 1;
+                            while(card < -1 || card >= p1.handSize()) {
+                                System.out.println("I'm sorry. That index won't work. Try again.");
+                                card = scan.nextInt() - 1;
+                            }
+                            if(card == -1) {
+                                System.out.println(p1.name() + " can't play any cards.");
+                            }
                         }
                         else {
                             IdiotCard temp = p1.getCard(card);
                             pile.add(p1.playCard(card));
                             System.out.println(p1.name() + " played " + temp+".\n\n\n");
-                            if(p1.handSize() < 3 && !deck.isEmpty())
+                            if(p1.handSize() < 3 && !deck.isEmpty()) {
                                 p1.addCard(deck.draw());
+                            }
                         }
                     }
                     else if (!p1.faceUpIsEmpty()) {
