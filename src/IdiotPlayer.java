@@ -24,6 +24,11 @@ public class IdiotPlayer {
 		
 	}  
         
+        public void fillHand(Pile p) {
+            for(int i = p.size() - 1; i > -1; i--)
+                this.addCard(p.remove(i));
+        }
+        
         public String name() {
             return name;
         }
