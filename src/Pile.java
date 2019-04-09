@@ -36,6 +36,7 @@ public class Pile {
     public boolean top3() {
         return pile.size() >= 2 && this.top().getFace() == 3;
     }
+    
     public boolean isEmpty() {
         return pile.isEmpty();
     }

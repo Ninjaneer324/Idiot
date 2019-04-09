@@ -296,23 +296,25 @@ public class Idiot2p {
         }
         if(top.getFace() == 2 || isSpecial(play))
             return true;
+        if(pile.top().getFace() == 7) {
+            return play.getFace() <= 7;
+        }
         if(pile.top3()) {
-            int temp = 2;
-            while(pile.size() - temp > -1 && pile.get(pile.size() - temp).getFace() == 3) {
-                temp++;
+            int temp = pile.size() - 2;
+            while(temp > 0) {
+                if(pile.get(temp).getFace() != 3)
+                    break;
+                temp--;
             }
-            if (pile.size() - temp <= -1)
-                temp = pile.size();
-            IdiotCard t = pile.get(pile.size() - temp);
+            IdiotCard t = pile.get(temp);
             if(!isSpecial(t) && t.getFace() <= play.getFace())
                     return true;
             else if(isSpecial(t)) {
                 switch(t.getFace()) {
-                    case 2:
-                    case 3:
-                        return true;
                     case 7:
                         return play.getFace() <= 7;
+                    default:
+                        return true;
                 }
             }
         }
