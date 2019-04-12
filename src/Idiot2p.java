@@ -288,16 +288,22 @@ public class Idiot2p {
     }
     
     public static boolean valid(IdiotCard top, IdiotCard play) {
-        if(play.getFace() == 10) {
+        if(top.getFace() == 2 || (pile.top().getFace() == 3 && !pile.top3())|| isSpecial(play)) {
+            if(play.getFace() == 10) {
             for(int i = pile.size() - 1; i > -1; i--)
                 trash.add(pile.remove(i));
             trash.add(play);
             return true;
-        }
-        if(top.getFace() == 2 || isSpecial(play))
+            }
+            pile.add(play);
             return true;
+        }
         if(pile.top().getFace() == 7) {
-            return play.getFace() <= 7;
+            if(play.getFace() <= 7){
+                pile.add(play);
+                return true;
+            }
+            return false;
         }
         if(pile.top3()) {
             int temp = pile.size() - 2;
@@ -307,12 +313,18 @@ public class Idiot2p {
                 temp--;
             }
             IdiotCard t = pile.get(temp);
-            if(!isSpecial(t) && t.getFace() <= play.getFace())
-                    return true;
+            if(!isSpecial(t) && t.getFace() <= play.getFace()){
+                pile.add(play);
+                return true;
+            }
             else if(isSpecial(t)) {
                 switch(t.getFace()) {
                     case 7:
-                        return play.getFace() <= 7;
+                        if(play.getFace() <= 7){
+                            pile.add(play);
+                            return true;
+                        }
+                        return false;
                     default:
                         return true;
                 }
